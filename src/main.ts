@@ -38,7 +38,7 @@ async function main() {
         } else {
             await discord.user?.setPresence({
                 status: PresenceUpdateStatus.DoNotDisturb,
-                activities: [{ type: ActivityType.Listening, name: "to crickets..." }],
+                activities: [{ type: ActivityType.Listening, name: `to crickets at ${batteryLevel}%` }],
             });
         }
     }, 1000);
