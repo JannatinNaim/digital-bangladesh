@@ -27,8 +27,11 @@ async function main() {
 
         const inputWatts = delta2Properties.data?.["pd.wattsInSum"];
         const outputWatts = delta2Properties.data?.["pd.wattsOutSum"];
-        const isCharging = delta2Properties.data?.["bms_emsStatus.chgState"];
+        const isGridOnline = delta2Properties.data?.["bms_emsStatus.chgState"];
+        const isCharging = inputWatts > 200;
         const batteryLevel = delta2Properties.data?.["bms_bmsStatus.soc"];
+
+        await discord.user?.fetch();
 
         if (isCharging) {
             await discord.user?.setPresence({
@@ -36,10 +39,19 @@ async function main() {
                 activities: [{ type: ActivityType.Watching, name: `the battery at ${batteryLevel}%` }],
             });
         } else {
-            await discord.user?.setPresence({
-                status: PresenceUpdateStatus.DoNotDisturb,
-                activities: [{ type: ActivityType.Listening, name: `to crickets at ${batteryLevel}%` }],
-            });
+            if (isGridOnline) {
+                await discord.user?.setPresence({
+                    status: PresenceUpdateStatus.DoNotDisturb,
+                    activities: [{ type: ActivityType.Listening, name: `to crickets at ${batteryLevel}%` }],
+                });
+            } else {
+                await discord.user?.setPresence({
+                    status: PresenceUpdateStatus.Idle,
+                    activities: [
+                        { type: ActivityType.Competing, name: `with Nigerians for lowest voltage electricity` },
+                    ],
+                });
+            }
         }
     }, 1000);
 }
