@@ -39,12 +39,12 @@ async function main() {
         if (isCharging) {
             await discord.user?.setPresence({
                 status: PresenceUpdateStatus.Online,
-                activities: [{ type: ActivityType.Watching, name: `the battery at ${batteryLevel}%` }],
+                activities: [{ type: ActivityType.Watching, name: `it charge at ${batteryLevel}%` }],
             });
         } else {
             await discord.user?.setPresence({
                 status: PresenceUpdateStatus.DoNotDisturb,
-                activities: [{ type: ActivityType.Listening, name: `to crickets at ${batteryLevel}%` }],
+                activities: [{ type: ActivityType.Listening, name: `crickets at ${batteryLevel}%` }],
             });
         }
     }
