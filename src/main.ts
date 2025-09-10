@@ -28,7 +28,7 @@ async function main() {
         const inputWatts = delta2Properties.data?.["pd.wattsInSum"];
         const outputWatts = delta2Properties.data?.["pd.wattsOutSum"];
 
-        const isCharging = inputWatts > 200;
+        const isCharging = inputWatts > 5;
         const batteryLevel = delta2Properties.data?.["bms_bmsStatus.soc"];
 
         console.log({ inputWatts, outputWatts, isCharging, batteryLevel });
